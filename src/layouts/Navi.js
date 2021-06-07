@@ -17,9 +17,9 @@ export default function Navi() {
           <Menu.Menu position="right">
             <Menu.Item>
               <Button.Group>
-                <Button color="green">Kayıt Ol</Button>
+                <Button color="white">Kayıt Ol</Button>
                 <Button.Or text="|" />
-                <Button primary>Giriş Yap</Button>
+                <Button color="grey">Giriş Yap</Button>
               </Button.Group>
             </Menu.Item>
           </Menu.Menu>

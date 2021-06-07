@@ -1,28 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Table } from "semantic-ui-react";
+import JobPositionService from "../../services/jobPositionService";
+import { Button } from "semantic-ui-react";
 
 export default function JobPosition() {
+  const [jobPositions, setjobPositions] = useState([]);
+
+  useEffect(() => {
+    let jobPositionService = new JobPositionService();
+    jobPositionService
+      .getJobPositions()
+      .then((result) => setjobPositions(result.data.data));
+  });
+
   return (
     <div>
       <Table celled color="black">
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Ürün Adı</Table.HeaderCell>
-            <Table.HeaderCell>Birim Fiyatı</Table.HeaderCell>
-            <Table.HeaderCell>Stok Adedi</Table.HeaderCell>
-            <Table.HeaderCell>Açıklama</Table.HeaderCell>
-            <Table.HeaderCell>Kategori</Table.HeaderCell>
+            <Table.HeaderCell>Pozisyon Adı</Table.HeaderCell>
+            <Table.HeaderCell>İlanları Gör</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
         <Table.Body>
-          <Table.Row>
-            <Table.Cell>1</Table.Cell>
-            <Table.Cell>1</Table.Cell>
-            <Table.Cell>1</Table.Cell>
-            <Table.Cell>1</Table.Cell>
-            <Table.Cell>1</Table.Cell>
-          </Table.Row>
+          {jobPositions.map((jobPosition) => (
+            <Table.Row key={jobPosition.id}>
+              <Table.Cell>{jobPosition.name}</Table.Cell>
+              <Table.Cell>
+                <Button content="Detay" secondary />
+              </Table.Cell>
+            </Table.Row>
+          ))}
         </Table.Body>
       </Table>
     </div>

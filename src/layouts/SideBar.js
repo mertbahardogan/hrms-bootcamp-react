@@ -20,10 +20,10 @@ export default function SideBar() {
           Şirketler
         </Menu.Item>
 
-        <Menu.Item name="cv">
+        {/* <Menu.Item name="cv">
           <Icon name="address card" />
           Özgeçmişler
-        </Menu.Item>
+        </Menu.Item> */}
       </Menu>
     </div>
   );
