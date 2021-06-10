@@ -3,7 +3,7 @@ import Navi from "./layouts/Navi";
 import "semantic-ui-css/semantic.min.css";
 import Dashboard from "./layouts/Dashboard";
 import { Container } from "semantic-ui-react";
-// import Foot from "./layouts/Foot";
+import Foot from "./layouts/Foot";
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <Navi></Navi>
       <Container className="main">
         <Dashboard></Dashboard>
-        {/* <Foot></Foot> */}
+        <Foot></Foot>
       </Container>
     </div>
   );

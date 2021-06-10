@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Button, Container, Icon, Menu } from "semantic-ui-react";
 
 export default function Navi() {
@@ -10,9 +11,9 @@ export default function Navi() {
             <Icon name="header" size="large" />
             RMS
           </Menu.Item>
-          <Menu.Item name="Ana Sayfa" />
-          <Menu.Item name="İş Arayanlar" />
-          <Menu.Item name="İş Verenler" />
+          <Menu.Item as={Link} to="/"  name="Ana Sayfa" />
+          <Menu.Item as={Link} to="/job-seekers"  name="İş Arayanlar" />
+          <Menu.Item as={Link} to="/employers"  name="İş Verenler" />
 
           <Menu.Menu position="right">
             <Menu.Item>
