@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Header, Icon, GridColumn, GridRow } from "semantic-ui-react";
+import { Grid, GridColumn, GridRow } from "semantic-ui-react";
 import JobAdvertisement from "../pages/jobs/JobAdvertisement";
 import Company from "../pages/others/Company";
 import JobPosition from "../pages/jobs/JobPosition";
@@ -8,6 +8,7 @@ import JobSeeker from "../pages/users/JobSeeker";
 import SideBar from "./SideBar";
 import { Route } from "react-router";
 import Home from "../pages/others/Home";
+import JobAdvertisementForm from "../pages/jobs/JobAdvertisementForm";
 
 export default function Dashboard() {
   return (
@@ -19,10 +20,10 @@ export default function Dashboard() {
           </GridColumn>
           <GridColumn width={12}>
             {/* burası dinamik olarak app.js'den getirilecek */}
-            <Header as="h3">
+            {/* <Header as="h3">
               <Icon name="list alternate outline" />
               <Header.Content>X Sayfası</Header.Content>
-            </Header>
+            </Header> */}
             <Route exact path="/" component={Home}></Route>
             <Route exact path="/companies" component={Company}></Route>
             <Route exact path="/job-seekers" component={JobSeeker}></Route>
@@ -31,6 +32,10 @@ export default function Dashboard() {
             <Route
               path="/job-advertisements"
               component={JobAdvertisement}
+            ></Route>
+            <Route
+              path="/add-job-advertisement"
+              component={JobAdvertisementForm}
             ></Route>
           </GridColumn>
         </GridRow>

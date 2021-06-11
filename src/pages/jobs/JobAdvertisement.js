@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table } from "semantic-ui-react";
+import { Table, Header, Icon } from "semantic-ui-react";
 import JobAdvertisementService from "../../services/jobAdvertisementService";
 
 export default function JobAdvertisement() {
@@ -7,13 +7,18 @@ export default function JobAdvertisement() {
 
   useEffect(() => {
     let jobAdvertisementService = new JobAdvertisementService();
+
     jobAdvertisementService
       .getJobAdvertisements()
       .then((result) => setJobAdvertisements(result.data.data));
-  });
+  }, []);
 
   return (
     <div>
+      <Header as="h3">
+        <Icon name="list alternate outline" />
+        <Header.Content>İş İlanları</Header.Content>
+      </Header>
       <Table celled color="black">
         <Table.Header>
           <Table.Row>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Icon } from "semantic-ui-react";
+import { Card, Icon, Header } from "semantic-ui-react";
 import JobAdvertisementService from "../../services/jobAdvertisementService";
 
 export default function Company() {
@@ -10,12 +10,16 @@ export default function Company() {
     jobAdvertisementService
       .getJobAdvertisements()
       .then((result) => setJobAdvertisements(result.data.data));
-  });
+  }, []);
 
   return (
     <div>
+      <Header as="h3">
+        <Icon name="list alternate outline" />
+        <Header.Content>Şirketler</Header.Content>
+      </Header>
       {jobAdvertisements.map((jobAdvertisement) => (
-        <Card fluid color="black">
+        <Card key={jobAdvertisement.id} fluid color="black">
           <Card.Content header={jobAdvertisement.employer.companyName} />
           <Card.Meta>{jobAdvertisement.employer.website}</Card.Meta>
           <Card.Content description={jobAdvertisement.employer.email} />

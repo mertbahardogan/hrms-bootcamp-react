@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table } from "semantic-ui-react";
+import { Table, Header, Icon } from "semantic-ui-react";
 import JobSeekerService from "../../services/jobSeekerService";
 
 export default function JobSeeker() {
@@ -10,10 +10,14 @@ export default function JobSeeker() {
     jobSeekerService
       .getJobSeekers()
       .then((result) => setjobSeekers(result.data.data));
-  });
+  }, []);
 
   return (
     <div>
+      <Header as="h3">
+        <Icon name="list alternate outline" />
+        <Header.Content>İş Arayanlar</Header.Content>
+      </Header>
       <Table celled color="black">
         <Table.Header>
           <Table.Row>
