@@ -1,4 +1,8 @@
 .App {
+  text-align: left;
+}
+
+.form.text {
   text-align: center;
 }
 
