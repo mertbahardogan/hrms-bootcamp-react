@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import JobAdvertisementService from "../../services/jobAdvertisementService";
 import JobPositionService from "../../services/jobPositionService";
 import CityService from "../../services/advertisement_utilities/cityService";
 import WorkTypeService from "../../services/advertisement_utilities/workTypeService";
@@ -12,10 +13,15 @@ import {
   Label,
   Button,
   TextArea,
+  Message,
 } from "semantic-ui-react";
 import SemanticDatepicker from "react-semantic-ui-datepickers";
 
 export default function JobAdvertisementForm() {
+  let jobAdvertisementService = new JobAdvertisementService();
+
+  const [postState, setPostState] = useState(false);
+
   const [jobPositions, setjobPositions] = useState([]);
   const [cities, setCities] = useState([]);
   const [workTypes, setWorkTypes] = useState([]);
@@ -71,7 +77,7 @@ export default function JobAdvertisementForm() {
     text: workType.name,
     value: workType.id,
   }));
-  
+
   const workTimesOptions = workTimes.map((workTime, index) => ({
     key: index,
     text: workTime.name,
@@ -80,21 +86,35 @@ export default function JobAdvertisementForm() {
 
   const formik = useFormik({
     initialValues: {
-      employerId: 2, // loginden sonra değiştirilecek
+      employerId: 31,
       jobPositionId: "",
       cityId: "",
       workTypeId: "",
       workTimeId: "",
-      minSalary: "",
-      maxSalary: "",
-      jobDescription: "",
+      minimumSalary: "",
+      maximumSalary: "",
+      description: "",
       countOfOpenPositions: "",
     },
+    validationSchema: Yup.object().shape({
+      cityId: Yup.number().required("Şehir seçilmesi gereklidir."),
+      jobPositionId: Yup.number().required("Pozisyon seçilmesi gereklidir."),
+      workTypeId: Yup.number().required("Çalışma türü seçilmesi gereklidir."),
+      workTimeId: Yup.number().required("Çalışma zamanı seçilmesi gereklidir."),
+      minimumSalary: Yup.number().min(0, "En az maaş 0'dan küçük olamaz."),
+      maximumSalary: Yup.number().min(0, "En çok maaş 0'dan küçük olamaz."),
+      description: Yup.string().required("Tanım girilmesi gereklidir."),
+      countOfOpenPositions: Yup.number()
+        .min(0, "Kişi sayısı 0'dan küçük olamaz.")
+        .required("Kişi sayısı bilgisi gereklidir."),
+      applicationDeadline: Yup.date().required(
+        "Son başvuru tarihi gereklidir."
+      ),
+    }),
     onSubmit: (values) => {
-      alert("SUCCESS!! :-)\n\n" + JSON.stringify(values, null, 4));
       let advertPosting = {
         employer: {
-          id: 2,
+          id: 31,
         },
         jobPosition: {
           id: values.jobPositionId,
@@ -109,34 +129,16 @@ export default function JobAdvertisementForm() {
           id: values.workTimeId,
         },
 
-        minSalary: values.minSalary,
-        maxSalary: values.maxSalary,
-        jobDescription: values.jobDescription,
+        minimumSalary: values.minimumSalary,
+        maximumSalary: values.maximumSalary,
+        description: values.description,
         countOfOpenPositions: values.countOfOpenPositions,
         applicationDeadline: values.applicationDeadline,
       };
-      //service ekleme satırı gelecek.
-      console.log(advertPosting);
+      jobAdvertisementService
+        .add(advertPosting)
+        .then((result) => setPostState(result.data.success));
     },
-    validationSchema: Yup.object().shape({
-      cityId: Yup.number().required("Şehir seçilmesi gereklidir."),
-      jobPositionId: Yup.number().required("Pozisyon seçilmesi gereklidir."),
-      workTypeId: Yup.number().required("Çalışma türü seçilmesi gereklidir."),
-      workTimeId: Yup.number().required("Çalışma zamanı seçilmesi gereklidir."),
-      minSalary: Yup.number()
-        .min(0, "En az maaş 0'dan küçük olamaz.")
-        .required("En az maaş bilgisi gereklidir."),
-      maxSalary: Yup.number()
-        .min(0, "En çok maaş 0'dan küçük olamaz.")
-        .required("En çok maaş bilgisi gereklidir."),
-      jobDescription: Yup.string().required("Tanım girilmesi gereklidir."),
-      countOfOpenPositions: Yup.number()
-        .min(0, "Kişi sayısı 0'dan küçük olamaz.")
-        .required("Kişi sayısı bilgisi gereklidir."),
-      applicationDeadline: Yup.date().required(
-        "Son başvuru tarihi gereklidir."
-      ),
-    }),
   });
 
   const handleChangeSemantic = (value, fieldName) => {
@@ -146,8 +148,17 @@ export default function JobAdvertisementForm() {
   return (
     <div>
       <h1>İş İlanı Ekle</h1>
+      {postState === true ? (
+        <Message
+          success
+          header="Ekleme işlemini başarıyla gerçekleştirdin."
+          content="Son bir adım kaldı! Onay durumunu profilinden takip edebilirsin."
+        />
+      ) : (
+        ""
+      )}
 
-      <Form>
+      <Form onSubmit={formik.handleSubmit}>
         <Form.Group widths={"equal"}>
           <Form.Field>
             <label>Şehir</label>
@@ -249,16 +260,16 @@ export default function JobAdvertisementForm() {
           <TextArea
             placeholder="İş Tanımı"
             style={{ minHeight: 100 }}
-            value={formik.values.jobDescription}
-            name="jobDescription"
+            value={formik.values.description}
+            name="description"
             onChange={(e) => {
               formik.handleChange(e);
             }}
             onBlur={formik.handleBlur}
           />
-          {formik.errors.jobDescription ? (
+          {formik.errors.description ? (
             <Label basic color="red" pointing>
-              {formik.errors.jobDescription}
+              {formik.errors.description}
             </Label>
           ) : (
             ""
@@ -272,8 +283,8 @@ export default function JobAdvertisementForm() {
               labelPosition="right"
               type="number"
               placeholder="En az maaş"
-              value={formik.values.minSalary}
-              name="minSalary"
+              value={formik.values.minimumSalary}
+              name="minimumSalary"
               onChange={(e) => {
                 formik.handleChange(e);
               }}
@@ -282,9 +293,9 @@ export default function JobAdvertisementForm() {
               <input />
               <Label>₺</Label>
             </Input>
-            {formik.errors.minSalary ? (
+            {formik.errors.minimumSalary ? (
               <Label basic color="red" pointing>
-                {formik.errors.minSalary}
+                {formik.errors.minimumSalary}
               </Label>
             ) : (
               ""
@@ -296,8 +307,8 @@ export default function JobAdvertisementForm() {
               labelPosition="right"
               type="number"
               placeholder="En Fazla Maaş"
-              value={formik.values.maxSalary}
-              name="maxSalary"
+              value={formik.values.maximumSalary}
+              name="maximumSalary"
               onChange={(e) => {
                 formik.handleChange(e);
               }}
@@ -306,9 +317,9 @@ export default function JobAdvertisementForm() {
               <input />
               <Label>₺</Label>
             </Input>
-            {formik.errors.maxSalary ? (
+            {formik.errors.maximumSalary ? (
               <Label basic color="red" pointing>
-                {formik.errors.maxSalary}
+                {formik.errors.maximumSalary}
               </Label>
             ) : (
               ""
