@@ -7,6 +7,13 @@ export default class JobAdvertisementService {
     );
   }
 
+  getAdvertByIsActiveAndId(advertId) {
+    return axios.get(
+      "http://localhost:8080/api/job_advertisements/getByIsActiveAndId?id=" +
+        advertId
+    );
+  }
+
   add(advertPosting) {
     return axios.post(
       "http://localhost:8080/api/job_advertisements/add",

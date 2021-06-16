@@ -12,6 +12,7 @@ import JobAdvertisementForm from "../pages/jobs/JobAdvertisementForm";
 import EmployerJobAdvertisement from "../pages/jobs/EmployerJobAdvertisement";
 import PersonnelClosedAdvertisement from "../pages/jobs/PersonnelClosedAdvertisement";
 import PersonnelOpenedAdvertisement from "../pages/jobs/PersonnelOpenedAdvertisement";
+import JobAdvertisementDetail from "../pages/jobs/JobAdvertisementDetail";
 
 export default function Dashboard() {
   return (
@@ -35,6 +36,10 @@ export default function Dashboard() {
             <Route
               path="/job-advertisements"
               component={JobAdvertisement}
+            ></Route>
+            <Route
+              path="/job-advertisement-detail/:id"
+              component={JobAdvertisementDetail}
             ></Route>
             <Route
               path="/add-job-advertisement"

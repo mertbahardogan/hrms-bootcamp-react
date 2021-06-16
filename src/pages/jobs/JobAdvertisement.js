@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Table, Header, Icon } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { Table, Header, Icon, Button } from "semantic-ui-react";
 import JobAdvertisementService from "../../services/jobAdvertisementService";
 
 export default function JobAdvertisement() {
@@ -7,7 +8,6 @@ export default function JobAdvertisement() {
 
   useEffect(() => {
     let jobAdvertisementService = new JobAdvertisementService();
-
     jobAdvertisementService
       .getJobAdvertisements()
       .then((result) => setJobAdvertisements(result.data.data));
@@ -30,6 +30,7 @@ export default function JobAdvertisement() {
             <Table.HeaderCell>Lokasyon</Table.HeaderCell>
             <Table.HeaderCell>Yetkili İletişim</Table.HeaderCell>
             <Table.HeaderCell>Son Başvuru Tarihi</Table.HeaderCell>
+            <Table.HeaderCell>İlan Detayları</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
@@ -39,16 +40,28 @@ export default function JobAdvertisement() {
               <Table.Cell>{jobAdvertisement.employer.companyName}</Table.Cell>
               <Table.Cell>{jobAdvertisement.jobPosition.name}</Table.Cell>
               <Table.Cell>{jobAdvertisement.description}</Table.Cell>
-              <Table.Cell>{jobAdvertisement.countOfOpenPositions} kişi</Table.Cell>
               <Table.Cell>
-              {jobAdvertisement.maximumSalary === 0
+                {jobAdvertisement.countOfOpenPositions} kişi
+              </Table.Cell>
+              <Table.Cell>
+                {jobAdvertisement.maximumSalary === 0
                   ? "-"
-                  : jobAdvertisement.minimumSalary +"-"+ 
+                  : jobAdvertisement.minimumSalary +
+                    "-" +
                     jobAdvertisement.maximumSalary}
               </Table.Cell>
               <Table.Cell>{jobAdvertisement.city.name}</Table.Cell>
               <Table.Cell>{jobAdvertisement.employer.email}</Table.Cell>
               <Table.Cell>{jobAdvertisement.applicationDeadline}</Table.Cell>
+              <Table.Cell>
+                <Button
+                  as={Link}
+                  to={`/job-advertisement-detail/${jobAdvertisement.id}`}
+                  secondary
+                >
+                  Görüntüle
+                </Button>
+              </Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
