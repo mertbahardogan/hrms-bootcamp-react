@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Table, Header, Icon, Button } from "semantic-ui-react";
+import { Header, Icon, Button, Card } from "semantic-ui-react";
 import JobAdvertisementService from "../../services/jobAdvertisementService";
 
 export default function JobAdvertisement() {
@@ -19,7 +19,31 @@ export default function JobAdvertisement() {
         <Icon name="list alternate outline" />
         <Header.Content>İş İlanları</Header.Content>
       </Header>
-      <Table celled color="black">
+      {jobAdvertisements.map((advert) => (
+        <Card fluid color="black" header="Option 1">
+          <Card.Content>
+            <Card.Header>{advert.jobPosition.name}</Card.Header>
+            <Card.Meta>
+              <strong>Son Başvuru Tarihi:</strong> {advert.applicationDeadline}
+            </Card.Meta>
+            <Card.Description>
+              <strong>Yayınlayan: </strong>{advert.employer.companyName}
+            </Card.Description>
+          </Card.Content>
+
+          <Card.Content textAlign="right">
+            <Button
+              as={Link}
+              to={`/job-advertisement-detail/${advert.id}`}
+              color="black"
+            >
+              Detayları Gör
+            </Button>
+          </Card.Content>
+        </Card>
+      ))}
+
+      {/* <Table celled color="black">
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Şirket Adı</Table.HeaderCell>
@@ -65,7 +89,7 @@ export default function JobAdvertisement() {
             </Table.Row>
           ))}
         </Table.Body>
-      </Table>
+      </Table> */}
     </div>
   );
 }
