@@ -1,9 +1,22 @@
 import axios from "axios";
 
 export default class JobAdvertisementService {
-  getJobAdvertisements() {
+  getAdverts() {
     return axios.get(
       "http://localhost:8080/api/job_advertisements/getByIsActive"
+    );
+  }
+
+  getAdvertsByIsActiveAndIsApproved() {
+    return axios.get(
+      "http://localhost:8080/api/job_advertisements/getByIsActiveAndIsApproved"
+    );
+  }
+
+  getAdvertsByEmployerId(employerId) {
+    return axios.get(
+      "http://localhost:8080/api/job_advertisements/getByIsActiveAndIsApprovedAndEmployer_Id?employerId=" +
+        employerId
     );
   }
 
@@ -11,6 +24,13 @@ export default class JobAdvertisementService {
     return axios.get(
       "http://localhost:8080/api/job_advertisements/getByIsActiveAndId?id=" +
         advertId
+    );
+  }
+
+  getAdvertByIsActiveAndCompanyName(companyName) {
+    return axios.get(
+      "http://localhost:8080/api/job_advertisements/getByIsActiveAndEmployer_CompanyName?companyName=" +
+        companyName
     );
   }
 

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Table, Header, Icon, Button } from "semantic-ui-react";
 import JobAdvertisementService from "../../services/jobAdvertisementService";
 
-export default function PersonnelClosedAdvertisement() {
+export default function PersonnelNotApprovedAdvert() {
   let jobAdvertisementService = new JobAdvertisementService();
   const [jobAdvertisements, setJobAdvertisements] = useState([]);
 
@@ -25,7 +25,7 @@ export default function PersonnelClosedAdvertisement() {
         <Header.Content>Onaylanmamış İş İlanları</Header.Content>
       </Header>
       <Header floated="right">
-        <Button as={Link} to="/personnel-opened-advertisement" color="secondary">
+        <Button as={Link} to="/personnel-approved-advertisement" secondary>
           <Icon name="check circle" /> Onaylanmış İlanlar
         </Button>
       </Header>

@@ -8,7 +8,7 @@ import Foot from "./layouts/Foot";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App font-link">
       <Navi></Navi>
       <Container className="main">
         <Dashboard></Dashboard>

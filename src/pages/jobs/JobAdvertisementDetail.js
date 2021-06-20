@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 import { Card, Grid, Header, Table, Button, Icon } from "semantic-ui-react";
 
 import JobAdvertisementService from "../../services/jobAdvertisementService";
@@ -72,8 +73,7 @@ export default function JobAdvertisementDetail() {
               <Table.Footer fullWidth>
                 <Table.Row>
                   <Table.HeaderCell colSpan="8">
-                    <Button size="mini" color="grey">
-                      <Icon name="eye"></Icon>
+                    <Button as={Link} to={`/company/${advertDetail.employer?.id}`} size="mini" secondary>
                       Şirket Profili
                     </Button>
                   </Table.HeaderCell>
@@ -114,7 +114,8 @@ export default function JobAdvertisementDetail() {
                     <strong>Maaş Aralığı</strong>
                   </Table.Cell>
                   <Table.Cell>
-                    {advertDetail.minimumSalary} - {advertDetail.maximumSalary} TL
+                    {advertDetail.minimumSalary} - {advertDetail.maximumSalary}{" "}
+                    TL
                   </Table.Cell>
                 </Table.Row>
                 <Table.Row>
@@ -130,21 +131,12 @@ export default function JobAdvertisementDetail() {
                   <Table.Cell>{advertDetail.applicationDeadline}</Table.Cell>
                 </Table.Row>
               </Table.Body>
-              <Table.Footer fullWidth>
-                <Table.Row>
-                  <Table.HeaderCell colSpan="8">
-                    <Button size="small" color="grey">
-                      <Icon name="play"></Icon>
-                      Başvur
-                    </Button>
-                    <Button size="small" color="grey">
-                      <Icon name="save"></Icon>
-                      Kaydet
-                    </Button>
-                  </Table.HeaderCell>
-                </Table.Row>
-              </Table.Footer>
             </Table>
+            <Button.Group color="black" attached="bottom">
+              <Button>Başvur</Button>
+              <Button.Or />
+              <Button>Kaydet</Button>
+            </Button.Group>
           </Grid.Column>
         </Grid.Row>
       </Grid>

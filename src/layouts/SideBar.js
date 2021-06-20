@@ -23,10 +23,10 @@ export default function SideBar() {
 
         {/* eğer işveren giriş yaptıysa bu alan görünsün */}
 
-        {/* <Menu.Item name="cv">
+        <Menu.Item as={Link} to="/resume" name="cv">
           <Icon name="address card" />
           Özgeçmişler
-        </Menu.Item> */}
+        </Menu.Item>
       </Menu>
     </div>
   );

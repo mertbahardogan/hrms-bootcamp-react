@@ -29,6 +29,8 @@ export default function Navi() {
           <Menu.Item as={Link} to="/" name="Ana Sayfa" />
           <Menu.Item as={Link} to="/job-seekers" name="İşarayanlar" />
           <Menu.Item as={Link} to="/employers" name="İşverenler" />
+          <Menu.Item as={Link} to="/personnel-approved-advertisement" name="Onaylı İlanlar" />
+          <Menu.Item as={Link} to="/personnel-not-approved-advertisement" name="Onaysız İlanlar" />
 
           <Menu.Menu position="right">
             <Menu.Item>

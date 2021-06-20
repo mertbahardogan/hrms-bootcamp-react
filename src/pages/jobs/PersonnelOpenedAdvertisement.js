@@ -22,7 +22,7 @@ export default function PersonnelOpenedAdvertisement() {
       <Header floated="right">
         <Button
           as={Link}
-          to="/personnel-closed-advertisement"
+          to="/personnel-not-approved-advertisement"
           color="secondary"
         >
           <Icon name="check circle" /> Onaylanmamış İlanlar

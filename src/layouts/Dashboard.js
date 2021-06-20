@@ -1,18 +1,20 @@
 import React from "react";
 import { Grid, GridColumn, GridRow } from "semantic-ui-react";
 import JobAdvertisement from "../pages/jobs/JobAdvertisement";
-import Company from "../pages/others/Company";
+import Company from "../pages/employer/Company";
 import JobPosition from "../pages/jobs/JobPosition";
-import Employer from "../pages/users/Employer";
-import JobSeeker from "../pages/users/JobSeeker";
+import Employer from "../pages/employer/Employer";
+import JobSeeker from "../pages/job_seeker/JobSeeker";
 import SideBar from "./SideBar";
 import { Route } from "react-router";
-import Home from "../pages/others/Home";
+import Home from "../pages/Home";
 import JobAdvertisementForm from "../pages/jobs/JobAdvertisementForm";
 import EmployerJobAdvertisement from "../pages/jobs/EmployerJobAdvertisement";
-import PersonnelClosedAdvertisement from "../pages/jobs/PersonnelClosedAdvertisement";
+import PersonnelNotApprovedAdvert from "../pages/jobs/PersonnelNotApprovedAdvert";
 import PersonnelOpenedAdvertisement from "../pages/jobs/PersonnelOpenedAdvertisement";
 import JobAdvertisementDetail from "../pages/jobs/JobAdvertisementDetail";
+import CompanyDetail from "../pages/employer/CompanyDetail";
+import Resume from "../pages/job_seeker/Resume";
 
 export default function Dashboard() {
   return (
@@ -29,16 +31,22 @@ export default function Dashboard() {
               <Header.Content>X Sayfası</Header.Content>
             </Header> */}
             <Route exact path="/" component={Home}></Route>
+
             <Route exact path="/companies" component={Company}></Route>
-            <Route exact path="/job-seekers" component={JobSeeker}></Route>
+            <Route path="/company/:id" component={CompanyDetail}></Route>
+
+            <Route exact path="/resume" component={Resume}></Route>
+
+            <Route exact path="/job-seeker" component={JobSeeker}></Route>
             <Route exact path="/job-positions" component={JobPosition}></Route>
             <Route exact path="/employers" component={Employer}></Route>
+
             <Route
               path="/job-advertisements"
               component={JobAdvertisement}
             ></Route>
             <Route
-              path="/job-advertisement-detail/:id"
+              path="/job-advertisement/:id"
               component={JobAdvertisementDetail}
             ></Route>
             <Route
@@ -50,13 +58,14 @@ export default function Dashboard() {
               component={EmployerJobAdvertisement}
             ></Route>
             <Route
-              path="/personnel-closed-advertisement"
-              component={PersonnelClosedAdvertisement}
+              path="/personnel-not-approved-advertisement"
+              component={PersonnelNotApprovedAdvert}
             ></Route>
             <Route
-              path="/personnel-opened-advertisement"
+              path="/personnel-approved-advertisement"
               component={PersonnelOpenedAdvertisement}
             ></Route>
+            <Route path="/company-detail/:id" component={CompanyDetail}></Route>
           </GridColumn>
         </GridRow>
       </Grid>
