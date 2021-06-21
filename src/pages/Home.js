@@ -1,32 +1,57 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Message,
   Icon,
   Header,
   Button,
   Card,
-  Image,
   Divider,
+  Modal,
 } from "semantic-ui-react";
+import JobAdvertisementService from "../services/jobAdvertisementService";
+import EmployerService from "../services/employerService";
+
+function exampleReducer(state, action) {
+  switch (action.type) {
+    case "close":
+      return { open: false };
+    case "open":
+      return { open: true, size: action.size, data: action.data };
+    default:
+      throw new Error("Desteklenmeyen durum.");
+  }
+}
 
 export default function Home() {
+  const [state, dispatch] = React.useReducer(exampleReducer, {
+    open: false,
+    size: undefined,
+    data: undefined,
+  });
+  const { open, size, data } = state;
+  const [adverts, setAdverts] = useState([]);
+  const [employers, setEmployers] = useState([]);
+
+  useEffect(() => {
+    let jobAdvertisementService = new JobAdvertisementService();
+    let employerService = new EmployerService();
+
+    employerService
+      .getEmployers()
+      .then((result) => setEmployers(result.data.data));
+
+    jobAdvertisementService
+      .getAdvertsByIsActiveAndIsApprovedOrdered()
+      .then((result) => setAdverts(result.data.data));
+  }, []);
+
   return (
     <div>
       <Header as="h2" icon textAlign="center">
         <Icon name="home" circular />
         <Header.Content>Ana Sayfa</Header.Content>
       </Header>
-      <p>
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-        ligula eget dolor. Aenean massa strong. Cum sociis natoque penatibus et
-        magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,
-        ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa
-        quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget,
-        arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
-        Nullam dictum felis eu pede link mollis pretium. Integer tincidunt. Cras
-        dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend
-        tellus. 
-      </p>
+
       <Message
         size="big"
         header="Kendine uygun iş mi arıyorsun?"
@@ -35,188 +60,97 @@ export default function Home() {
 
       <Divider hidden />
       <Divider hidden />
-      <Divider hidden />
-      <Divider horizontal>İş İlanlarında Öne Çıkanlar</Divider>
+      <Divider horizontal>En Güncel İş İlanları</Divider>
       <Divider hidden />
 
-      <Card.Group itemsPerRow={3}>
-        <Card>
-          <Card.Content>
-            <Image
-              floated="right"
-              size="mini"
-              src="../images/avatar/large/steve.jpg"
-            />
-            <Card.Header>Steve Sanders</Card.Header>
-            <Card.Meta>Friends of Elliot</Card.Meta>
-            <Card.Description>
-              Steve wants to add you to the group <strong>best friends</strong>
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <div className="ui two buttons">
-              <Button basic color="green">
-                Approve
-              </Button>
-              <Button basic color="red">
-                Decline
-              </Button>
-            </div>
-          </Card.Content>
-        </Card>
-        <Card>
-          <Card.Content>
-            <Image
-              floated="right"
-              size="mini"
-              src="/images/avatar/large/molly.png"
-            />
-            <Card.Header>Molly Thomas</Card.Header>
-            <Card.Meta>New User</Card.Meta>
-            <Card.Description>
-              Molly wants to add you to the group <strong>musicians</strong>
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <div className="ui two buttons">
-              <Button basic color="green">
-                Approve
-              </Button>
-              <Button basic color="red">
-                Decline
-              </Button>
-            </div>
-          </Card.Content>
-        </Card>
-        <Card>
-          <Card.Content>
-            <Image
-              floated="right"
-              size="mini"
-              src="/images/avatar/large/jenny.jpg"
-            />
-            <Card.Header>Jenny Lawrence</Card.Header>
-            <Card.Meta>New User</Card.Meta>
-            <Card.Description>
-              Jenny requested permission to view your contact details
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <div className="ui two buttons">
-              <Button basic color="green">
-                Approve
-              </Button>
-              <Button basic color="red">
-                Decline
-              </Button>
-            </div>
-          </Card.Content>
-        </Card>
-        <Card>
-          <Card.Content>
-            <Image
-              floated="right"
-              size="mini"
-              src="/images/avatar/large/jenny.jpg"
-            />
-            <Card.Header>Jenny Lawrence</Card.Header>
-            <Card.Meta>New User</Card.Meta>
-            <Card.Description>
-              Jenny requested permission to view your contact details
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <div className="ui two buttons">
-              <Button basic color="green">
-                Approve
-              </Button>
-              <Button basic color="red">
-                Decline
-              </Button>
-            </div>
-          </Card.Content>
-        </Card>
-        <Card>
-          <Card.Content>
-            <Image
-              floated="right"
-              size="mini"
-              src="/images/avatar/large/jenny.jpg"
-            />
-            <Card.Header>Jenny Lawrence</Card.Header>
-            <Card.Meta>New User</Card.Meta>
-            <Card.Description>
-              Jenny requested permission to view your contact details
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <div className="ui two buttons">
-              <Button basic color="green">
-                Approve
-              </Button>
-              <Button basic color="red">
-                Decline
-              </Button>
-            </div>
-          </Card.Content>
-        </Card>
-        <Card>
-          <Card.Content>
-            <Image
-              floated="right"
-              size="mini"
-              src="/images/avatar/large/jenny.jpg"
-            />
-            <Card.Header>Jenny Lawrence</Card.Header>
-            <Card.Meta>New User</Card.Meta>
-            <Card.Description>
-              Jenny requested permission to view your contact details
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <div className="ui two buttons">
-              <Button basic color="green">
-                Approve
-              </Button>
-              <Button basic color="red">
-                Decline
-              </Button>
-            </div>
-          </Card.Content>
-        </Card>
-      </Card.Group>
+      <div className="ui stackable two column grid">
+        {adverts.map((advert) => (
+          <div key={advert.id} className="column">
+            <Card color="black" href={`/job-advertisement/${advert.id}`}>
+              <Card.Content textAlign="center">
+                <Card.Header>{advert.jobPosition.name}</Card.Header>
+                <Card.Meta>{advert.employer.companyName}</Card.Meta>
+                <Card.Description>
+                  <b>Açıklama:</b> {advert.description.substring(0, 25)}...
+                </Card.Description>
+              </Card.Content>
+            </Card>
+          </div>
+        ))}
+      </div>
 
       <Divider hidden />
       <Divider hidden />
       <Divider hidden />
-      <Divider horizontal>Önerilen Açık Pozisyonlar</Divider>
+      <Divider horizontal>Öne Çıkan İşverenler ile İletişime Geç</Divider>
       <Divider hidden />
-      <Card.Group itemsPerRow={4}>
-        <Card
-          href="#card-example-link-card"
-          header="Elliot Baker"
-          meta="Friend"
-          description="Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat."
-        />
-        <Card
-          href="#card-example-link-card"
-          header="Elliot Baker"
-          meta="Friend"
-          description="Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat."
-        />
-        <Card
-          href="#card-example-link-card"
-          header="Elliot Baker"
-          meta="Friend"
-          description="Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat."
-        />
-        <Card
-          href="#card-example-link-card"
-          header="Elliot Baker"
-          meta="Friend"
-          description="Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat."
-        />
-      </Card.Group>
+
+      <div className="ui stackable three column grid">
+        {employers.map((employer) => (
+          <div key={employer.id} className="column">
+            <Card color="black">
+              <Card.Content textAlign="center">
+                <Card.Header>{employer.companyName}</Card.Header>
+                <Card.Meta>{employer.website}</Card.Meta>
+                <Icon name="building"></Icon>
+              </Card.Content>
+              <Card.Content extra>
+                <div className="ui two buttons">
+                  <Button
+                    onClick={() =>
+                      dispatch({
+                        type: "open",
+                        size: "mini",
+                        data: employer.email,
+                      })
+                    }
+                    basic
+                    color="black"
+                  >
+                    <Icon name="mail" />
+                    Email
+                  </Button>
+                  <Button
+                    onClick={() =>
+                      dispatch({
+                        type: "open",
+                        size: "mini",
+                        data: "+90" + employer.phoneNumber,
+                      })
+                    }
+                    basic
+                    color="red"
+                  >
+                    <Icon name="phone" />
+                    Numara
+                  </Button>
+                </div>
+              </Card.Content>
+            </Card>
+          </div>
+        ))}
+      </div>
+
+      <Modal
+        textAlign="center"
+        size={size}
+        open={open}
+        data={data}
+        onClose={() => dispatch({ type: "close" })}
+      >
+        <Modal.Header>İletişim Bilgisi</Modal.Header>
+        <Modal.Content>
+          <p>{data}</p>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button negative onClick={() => dispatch({ type: "close" })}>
+            Kapat
+          </Button>
+          <Button positive onClick={() => dispatch({ type: "close" })}>
+            İletişime Geç
+          </Button>
+        </Modal.Actions>
+      </Modal>
     </div>
   );
 }

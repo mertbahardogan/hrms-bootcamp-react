@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Table, Header, Icon, Button } from "semantic-ui-react";
 import JobAdvertisementService from "../../services/jobAdvertisementService";
 
-export default function PersonnelOpenedAdvertisement() {
+export default function PersonnelApprovedAdvertisement() {
   const [jobAdvertisements, setJobAdvertisements] = useState([]);
 
   useEffect(() => {

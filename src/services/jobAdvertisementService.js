@@ -13,6 +13,19 @@ export default class JobAdvertisementService {
     );
   }
 
+  getAdvertsByIsActiveAndIsApprovedOrdered() {
+    return axios.get(
+      "http://localhost:8080/api/job_advertisements/getByIsActiveAndIsApprovedOrderByReleaseDateDesc"
+    );
+  }
+
+  getAdvertsByJobPositionId(jobPositionId) {
+    return axios.get(
+      "http://localhost:8080/api/job_advertisements/getByIsActiveAndIsApprovedAndJob_Position_Id?jobPositionId=" +
+        jobPositionId
+    );
+  }
+
   getAdvertsByEmployerId(employerId) {
     return axios.get(
       "http://localhost:8080/api/job_advertisements/getByIsActiveAndIsApprovedAndEmployer_Id?employerId=" +

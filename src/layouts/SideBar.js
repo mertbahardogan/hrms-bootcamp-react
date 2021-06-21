@@ -21,11 +21,14 @@ export default function SideBar() {
           Şirketler
         </Menu.Item>
 
-        {/* eğer işveren giriş yaptıysa bu alan görünsün */}
-
         <Menu.Item as={Link} to="/resume" name="cv">
           <Icon name="address card" />
           Özgeçmişler
+        </Menu.Item>
+        
+        <Menu.Item as={Link} to="/employer-job-advertisement" name="employer">
+          <Icon name="bell" />
+          İş İşanları - İşveren
         </Menu.Item>
       </Menu>
     </div>

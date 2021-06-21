@@ -11,10 +11,11 @@ import Home from "../pages/Home";
 import JobAdvertisementForm from "../pages/jobs/JobAdvertisementForm";
 import EmployerJobAdvertisement from "../pages/jobs/EmployerJobAdvertisement";
 import PersonnelNotApprovedAdvert from "../pages/jobs/PersonnelNotApprovedAdvert";
-import PersonnelOpenedAdvertisement from "../pages/jobs/PersonnelOpenedAdvertisement";
+import PersonnelApprovedAdvertisement from "../pages/jobs/PersonnelApprovedAdvertisement";
 import JobAdvertisementDetail from "../pages/jobs/JobAdvertisementDetail";
 import CompanyDetail from "../pages/employer/CompanyDetail";
 import Resume from "../pages/job_seeker/Resume";
+import JobAdvertisementDetailPosition from "../pages/jobs/JobAdvertisementDetailPosition";
 
 export default function Dashboard() {
   return (
@@ -39,6 +40,12 @@ export default function Dashboard() {
 
             <Route exact path="/job-seeker" component={JobSeeker}></Route>
             <Route exact path="/job-positions" component={JobPosition}></Route>
+            <Route
+              exact
+              path="/job-position-advertisements/:id"
+              component={JobAdvertisementDetailPosition}
+            ></Route>
+
             <Route exact path="/employers" component={Employer}></Route>
 
             <Route
@@ -63,7 +70,7 @@ export default function Dashboard() {
             ></Route>
             <Route
               path="/personnel-approved-advertisement"
-              component={PersonnelOpenedAdvertisement}
+              component={PersonnelApprovedAdvertisement}
             ></Route>
             <Route path="/company-detail/:id" component={CompanyDetail}></Route>
           </GridColumn>

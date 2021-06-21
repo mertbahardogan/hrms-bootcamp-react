@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Table, Header, Icon } from "semantic-ui-react";
 import JobPositionService from "../../services/jobPositionService";
 import { Button } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 export default function JobPosition() {
   const [jobPositions, setjobPositions] = useState([]);
@@ -32,7 +33,13 @@ export default function JobPosition() {
             <Table.Row key={jobPosition.id}>
               <Table.Cell>{jobPosition.name}</Table.Cell>
               <Table.Cell>
-                <Button content="Detay" secondary />
+                <Button
+                  as={Link}
+                  to={`/job-position-advertisements/${jobPosition.id}`}
+                  color="black"
+                >
+                  Detayları Gör
+                </Button>
               </Table.Cell>
             </Table.Row>
           ))}
