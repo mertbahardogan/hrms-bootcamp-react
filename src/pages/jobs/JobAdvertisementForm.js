@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import JobAdvertisementService from "../../services/jobAdvertisementService";
 import JobPositionService from "../../services/jobPositionService";
-import CityService from "../../services/advertisement_utilities/cityService";
-import WorkTypeService from "../../services/advertisement_utilities/workTypeService";
-import WorkTimeService from "../../services/advertisement_utilities/workTimeService";
+import CityService from "../../services/advertisementUtilities/cityService";
+import WorkTypeService from "../../services/advertisementUtilities/workTypeService";
+import WorkTimeService from "../../services/advertisementUtilities/workTimeService";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
@@ -154,9 +154,7 @@ export default function JobAdvertisementForm() {
           header="Ekleme işlemini başarıyla gerçekleştirdin."
           content="Son bir adım kaldı! Onay durumunu profilinden takip edebilirsin."
         />
-      ) : (
-        ""
-      )}
+      ) : null}
 
       <Form onSubmit={formik.handleSubmit}>
         <Form.Group widths={"equal"}>
@@ -179,9 +177,7 @@ export default function JobAdvertisementForm() {
               <Label basic color="red" pointing>
                 {formik.errors.cityId}
               </Label>
-            ) : (
-              " "
-            )}
+            ) : null}
           </Form.Field>
           <Form.Field>
             <label>Pozisyon</label>
@@ -203,7 +199,7 @@ export default function JobAdvertisementForm() {
                 {formik.errors.jobPositionId}
               </Label>
             ) : (
-              " "
+              null
             )}
           </Form.Field>
         </Form.Group>
@@ -228,7 +224,7 @@ export default function JobAdvertisementForm() {
                 {formik.errors.workTypeId}
               </Label>
             ) : (
-              " "
+              null
             )}
           </Form.Field>
           <Form.Field>
@@ -272,7 +268,7 @@ export default function JobAdvertisementForm() {
               {formik.errors.description}
             </Label>
           ) : (
-            ""
+            null
           )}
         </Form.Field>
 
@@ -298,7 +294,7 @@ export default function JobAdvertisementForm() {
                 {formik.errors.minimumSalary}
               </Label>
             ) : (
-              ""
+              null
             )}
           </Form.Field>
           <Form.Field>
@@ -322,7 +318,7 @@ export default function JobAdvertisementForm() {
                 {formik.errors.maximumSalary}
               </Label>
             ) : (
-              ""
+              null
             )}
           </Form.Field>
         </Form.Group>
@@ -345,7 +341,7 @@ export default function JobAdvertisementForm() {
                 {formik.errors.countOfOpenPositions}
               </Label>
             ) : (
-              ""
+              null
             )}
           </Form.Field>
           <Form.Field>
@@ -364,7 +360,7 @@ export default function JobAdvertisementForm() {
                 {formik.errors.applicationDeadline}
               </Label>
             ) : (
-              ""
+              null
             )}
           </Form.Field>
         </Form.Group>

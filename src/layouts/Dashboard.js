@@ -16,6 +16,7 @@ import JobAdvertisementDetail from "../pages/jobs/JobAdvertisementDetail";
 import CompanyDetail from "../pages/employer/CompanyDetail";
 import Resume from "../pages/job_seeker/Resume";
 import JobAdvertisementDetailPosition from "../pages/jobs/JobAdvertisementDetailPosition";
+import ResumeDetail from "../pages/job_seeker/ResumeDetail";
 
 export default function Dashboard() {
   return (
@@ -39,6 +40,11 @@ export default function Dashboard() {
             <Route exact path="/resume" component={Resume}></Route>
 
             <Route exact path="/job-seeker" component={JobSeeker}></Route>
+            <Route
+              exact
+              path="/job-seeker/resume"
+              component={ResumeDetail}
+            ></Route>
             <Route exact path="/job-positions" component={JobPosition}></Route>
             <Route
               exact
