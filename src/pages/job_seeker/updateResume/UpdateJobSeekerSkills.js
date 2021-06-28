@@ -1,25 +1,19 @@
 import React, { useState } from "react";
-import { Button, Modal } from "semantic-ui-react";
+import { Button, Modal, Icon } from "semantic-ui-react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { FormField, Label, Divider } from "semantic-ui-react";
 import * as Yup from "yup";
 import SkillService from "../../../services/resumeUtilities/skillService";
 
-export default function UpdateJobSeekerSkills(props) {
+export default function UpdateJobSeekerSkills({ id, skillValue }) {
   let skillService = new SkillService();
-
-  const [skill, setSkill] = useState([]);
-
   const [open, setOpen] = useState(false);
-
   const refreshPage = () => {
     window.location.reload();
   };
-
   const initialValues = {
-    name: "",
+    name: skillValue.name,
   };
-
   const schema = Yup.object({
     name: Yup.string().required("Yetenek adı zorunludur."),
   });
@@ -36,10 +30,7 @@ export default function UpdateJobSeekerSkills(props) {
           },
         };
 
-        skillService
-          .updateSkill(props.id, newSkill)
-          .then((result) => setSkill(result.data.success))
-          .then(refreshPage);
+        skillService.updateSkill(id, newSkill).then(refreshPage);
       }}
     >
       <Modal
@@ -47,8 +38,8 @@ export default function UpdateJobSeekerSkills(props) {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={
-          <Button size="mini" basic color="green">
-            Güncelle
+          <Button floated="right" size="tiny" basic color="green" icon>
+            <Icon name="edit" />
           </Button>
         }
       >

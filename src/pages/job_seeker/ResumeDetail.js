@@ -4,15 +4,27 @@ import JobSeekerService from "../../services/jobSeekerService";
 import JobSeekerSkills from "./resumeFields/JobSeekerSkills";
 import JobSeekerEducations from "./resumeFields/JobSeekerEducations";
 import JobSeekerExperiences from "./resumeFields/JobSeekerExperiences";
+import JobSeekerLanguages from "./resumeFields/JobSeekerLanguages";
+import JobSeekerLinks from "./resumeFields/JobSeekerLinks";
+import PictureService from "../../services/resumeUtilities/pictureService";
 
 export default function ResumeDetail() {
   const [seeker, setValues] = useState([]);
+  const [picture, setPicture] = useState({});
+  const [seekerId, setSeekerId] = useState(3);
 
   useEffect(() => {
     let jobSeekerService = new JobSeekerService();
+    let pictureService = new PictureService();
+
     jobSeekerService
-      .getJobSeekerById(3)
+      .getJobSeekerById(seekerId)
       .then((result) => setValues(result.data.data[0]));
+
+    pictureService
+      .getPictureById(seekerId)
+      .then((result) => setPicture(result.data.data[0].url))
+      .then(console.log(picture));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -23,11 +35,7 @@ export default function ResumeDetail() {
           <Button size="tiny" color="green" floated="left">
             Güncelle
           </Button>
-          <Image
-            floated="right"
-            size="tiny"
-            src="https://res.cloudinary.com/dklvms3jy/image/upload/v1622760971/vh9faxn078oavoqpcvbm.jpg"
-          ></Image>
+          <Image floated="right" size="tiny" src={picture}></Image>
           <Card.Header textAlign="center">
             {seeker.firstName + " " + seeker.lastName} Özgeçmişi
           </Card.Header>
@@ -49,23 +57,52 @@ export default function ResumeDetail() {
       </Card>
 
       <Divider></Divider>
-      <Label size="large" color="brown">
+      <Label size="large" color="black">
         Yetenekler
       </Label>
       <Divider hidden></Divider>
-      <JobSeekerSkills></JobSeekerSkills>
+      <JobSeekerSkills seekerId={seekerId}></JobSeekerSkills>
       <Divider></Divider>
-      <Label size="large" color="brown">
+      <Label size="large" color="black">
         Eğitim Geçmişi
       </Label>
       <Divider hidden></Divider>
-      <JobSeekerEducations></JobSeekerEducations>
+      <JobSeekerEducations seekerId={seekerId}></JobSeekerEducations>
       <Divider></Divider>
-      <Label size="large" color="brown">
+      <Label size="large" color="black">
         Tecrübeler
       </Label>
       <Divider hidden></Divider>
-      <JobSeekerExperiences></JobSeekerExperiences>
+      <JobSeekerExperiences seekerId={seekerId}></JobSeekerExperiences>
+      <Divider></Divider>
+      <Label size="large" color="black">
+        Yabancı Diller
+      </Label>
+      <Divider hidden></Divider>
+
+      <JobSeekerLanguages seekerId={seekerId}></JobSeekerLanguages>
+
+      <Divider></Divider>
+      <Label size="large" color="black">
+        Linkler
+      </Label>
+      <Divider hidden></Divider>
+
+      <JobSeekerLinks seekerId={seekerId}></JobSeekerLinks>
+      <Divider hidden></Divider>
     </div>
   );
 }
+
+//favorilere ekleme redux ile yapılacak
+
+//TÜM DEĞER ATAMA IDLERİ PROPDAN AL
+
+//tarih atamalarında 1 gün eksik atanma hatası
+
+//Resim servisinden Güncellenebilecek
+//resim yükleme hatası
+
+//Kullanılan alanlar customlaştırılacak.
+
+//Tüm cvler listelenecek

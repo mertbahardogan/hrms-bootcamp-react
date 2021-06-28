@@ -1,38 +1,45 @@
 import React, { useEffect, useState } from "react";
-import JobSeekerService from "../../../services/jobSeekerService";
+import ExperienceService from "../../../services/resumeUtilities/experienceService";
 import { Card } from "semantic-ui-react";
+import UpdateJobSeekerExperiences from "../updateResume/UpdateJobSeekerExperiences";
 
-export default function JobSeekerExperiences() {
+export default function JobSeekerExperiences({seekerId}) {
   const [experience, setExperience] = useState([]);
 
+  console.log(seekerId);
   useEffect(() => {
-    let jobSeekerService = new JobSeekerService();
-    jobSeekerService
-      .getJobSeekerResume(3)
-      .then((result) =>
-        setExperience({ ...result.data.data.jobSeekerExperiences[0] })
-      );
+    let experienceService = new ExperienceService();
+    experienceService
+      .getExperiencesById(seekerId)
+      .then((result) => setExperience(result.data.data));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div>
-      <Card>
-        <Card.Content>
-          <Card.Header>{experience.position}</Card.Header>
-          <Card.Meta>{experience.workplaceName}</Card.Meta>
-          <Card.Description>
-            Matthew is a pianist living in Nashville.
-          </Card.Description>
-        </Card.Content>
-      </Card>
-      <Card>
-        <Card.Content header={experience.workplaceName} />
-        <Card.Content header={experience.position} />
-        <Card.Content header={experience.startDate} />
-        <Card.Content header={experience.endDate} />
-      </Card>
+      <div className="ui stackable three column grid">
+        {experience.map((value) => (
+          <div key={value.id} className="column">
+            <Card>
+              <Card.Content>
+                <UpdateJobSeekerExperiences
+                  id={value.id}
+                  experienceValue={value}
+                ></UpdateJobSeekerExperiences>
+                <Card.Header>{value.position}</Card.Header>
+                <Card.Meta>{value.workplaceName}</Card.Meta>
+                <Card.Description>
+                  <b>Başlangıç: </b>
+                  {value.startDate}
+                </Card.Description>
+                <Card.Description>
+                  <b>Bitiş: </b>
+                  {value.endDate}
+                </Card.Description>
+              </Card.Content>
+            </Card>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
-
-//SERVİCE DEĞİŞTİR
