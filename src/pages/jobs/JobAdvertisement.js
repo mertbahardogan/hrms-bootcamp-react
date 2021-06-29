@@ -65,7 +65,7 @@ export default function JobAdvertisement() {
       ))}
       <Pagination
         defaultActivePage={1}
-        totalPages={2}
+        totalPages={4}
         onPageChange={handlePaginationChanging}
       />
     </div>

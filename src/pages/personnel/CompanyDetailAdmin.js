@@ -3,9 +3,9 @@ import { Link, useParams } from "react-router-dom";
 import { Grid, Table, Header, Card, Button } from "semantic-ui-react";
 import EmployerService from "../../services/employerService";
 import JobAdvertisementService from "../../services/jobAdvertisementService";
-import UpdateCompany from "./UpdateCompany";
+import ConfirmCompanyUpdate from "./ConfirmCompanyUpdate";
 
-export default function CompanyDetail() {
+export default function CompanyDetailAdmin() {
   let { id } = useParams();
   const [adverts, setAdverts] = useState([]);
   const [employer, setEmployer] = useState({});
@@ -20,7 +20,7 @@ export default function CompanyDetail() {
       .then(console.log(adverts.length));
 
     employerService
-      .getByIdForUsers(id)
+      .getByIdForAdmins(id)
       .then((result) => setEmployer(result.data.data[0]))
       .then(console.log(employer));
     // .then(console.log("Detail: " + employer.employerCase.caseName, id));
@@ -77,18 +77,8 @@ export default function CompanyDetail() {
                   </Table.Cell>
                 </Table.Row>
               </Table.Body>
-              <Table.Footer fullWidth>
-                <Table.Row>
-                  <Table.HeaderCell />
-                  <Table.HeaderCell colSpan="4">
-                    <UpdateCompany
-                      id={employer?.id}
-                      companyValue={employer}
-                    ></UpdateCompany>
-                  </Table.HeaderCell>
-                </Table.Row>
-              </Table.Footer>
             </Table>
+            <ConfirmCompanyUpdate id={employer?.id}></ConfirmCompanyUpdate>
           </Grid.Column>
 
           <Grid.Column width={10}>

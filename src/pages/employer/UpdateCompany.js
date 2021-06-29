@@ -12,7 +12,7 @@ import {
 import * as Yup from "yup";
 import EmployerService from "../../services/employerService";
 
-export default function UpdateCompany({ id, companyValue, mert }) {
+export default function UpdateCompany({ id, companyValue }) {
   let employerService = new EmployerService();
   const [open, setOpen] = useState(false);
   const refreshPage = () => {
@@ -20,11 +20,11 @@ export default function UpdateCompany({ id, companyValue, mert }) {
   };
 
   const initialValues = {
-    companyName: companyValue.companyName,
-    email: companyValue.email,
-    website: companyValue.website,
-    phoneNumber: companyValue.phoneNumber,
-    password: companyValue.password,
+    companyName: companyValue?.companyName,
+    email: companyValue?.email,
+    website: companyValue?.website,
+    phoneNumber: companyValue?.phoneNumber,
+    password: companyValue?.password,
   };
   const schema = Yup.object().shape({
     companyName: Yup.string().required("Şirket adı zorunludur."),

@@ -18,6 +18,8 @@ import Resume from "../pages/job_seeker/Resume";
 import JobAdvertisementDetailPosition from "../pages/jobs/JobAdvertisementDetailPosition";
 import ResumeDetail from "../pages/job_seeker/ResumeDetail";
 import { ToastContainer } from "react-toastify";
+import CompanyAdmin from "../pages/personnel/CompanyAdmin";
+import CompanyDetailAdmin from "../pages/personnel/CompanyDetailAdmin";
 
 export default function Dashboard() {
   return (
@@ -38,7 +40,14 @@ export default function Dashboard() {
             <Route exact path="/" component={Home}></Route>
 
             <Route exact path="/companies" component={Company}></Route>
-            <Route path="/company/:id" component={CompanyDetail}></Route>
+            <Route exact path="/company/:id" component={CompanyDetail}></Route>
+
+            <Route
+              exact
+              path="/companies/admin"
+              component={CompanyAdmin}
+            ></Route>
+            <Route exact path="/company/admin/:id" component={CompanyDetailAdmin}></Route>
 
             <Route exact path="/resume" component={Resume}></Route>
 

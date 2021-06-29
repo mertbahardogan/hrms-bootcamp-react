@@ -11,16 +11,32 @@ export default class EmployerService {
     );
   }
 
-  updateCompany(id, employer) {
+  getByIdForUsers(id) {
+    return axios.get(
+      "http://localhost:8080/api/employers/getByIdForUsers?id=" + id
+    );
+  }
+  getByIdForAdmins(id) {
+    return axios.get(
+      "http://localhost:8080/api/employers/getByIdForAdmins?id=" + id
+    );
+  }
+
+  confirmUpdate(employer, id) {
     return axios.post(
-      "http://localhost:8080/api/employers/update?id=" + id,
+      "http://localhost:8080/api/employers/ConfirmUpdate?EmployerId=" + id,
       employer
     );
   }
 
-  getOldEmployerById(id) {
-    return axios.get(
-      "http://localhost:8080/api/oldEmployers/getbyEmployerid?id=" + id
+  getEmployerCases() {
+    return axios.get("http://localhost:8080/api/employerCases/getall");
+  }
+
+  updateCompany(id, employer) {
+    return axios.post(
+      "http://localhost:8080/api/employers/update?id=" + id,
+      employer
     );
   }
 }
