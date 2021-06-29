@@ -13,6 +13,15 @@ export default class JobAdvertisementService {
     );
   }
 
+  getAdvertsIsActiveAndApprovedByPage(pageNumber, pageSize) {
+    return axios.get(
+      "http://localhost:8080/api/job_advertisements/getByIsActiveAndIsApprovedOrderByReleaseDateDescByPage?pageNumber=" +
+        pageNumber +
+        "&pageSize=" +
+        pageSize
+    );
+  }
+
   getAdvertsByIsActiveAndIsApprovedOrdered() {
     return axios.get(
       "http://localhost:8080/api/job_advertisements/getByIsActiveAndIsApprovedOrderByReleaseDateDesc"

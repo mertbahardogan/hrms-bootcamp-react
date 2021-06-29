@@ -3,11 +3,13 @@ import { Link, useParams } from "react-router-dom";
 import { Grid, Table, Header, Card, Button } from "semantic-ui-react";
 import EmployerService from "../../services/employerService";
 import JobAdvertisementService from "../../services/jobAdvertisementService";
+import UpdateCompany from "./UpdateCompany";
 
 export default function CompanyDetail() {
   let { id } = useParams();
   const [adverts, setAdverts] = useState([]);
   const [employer, setEmployer] = useState({});
+  const [oldEmployer, setOldEmployer] = useState({});
 
   useEffect(() => {
     let jobAdvertisementService = new JobAdvertisementService();
@@ -20,9 +22,17 @@ export default function CompanyDetail() {
 
     employerService
       .getEmployerById(id)
-      .then((result) => setEmployer(result.data.data[0]));
+      .then((result) => setEmployer(result.data.data[0]))
+      .then(console.log("Detail: " + employer.employerCase.caseName, id));
+
+    employer.employerCase.caseName === "Onaylandı"
+      ? console.log("ÇALIŞTIM")
+      : employerService
+          .getOldEmployerById(id)
+          .then((result) => setEmployer(result.data.data));
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id]);
   return (
     <div>
       <Header>
@@ -38,6 +48,7 @@ export default function CompanyDetail() {
           </Card.Content>
         </Card>
       </Header>
+
       <Grid columns="two" divided>
         <Grid.Row>
           <Grid.Column width={6}>
@@ -72,8 +83,21 @@ export default function CompanyDetail() {
                   </Table.Cell>
                 </Table.Row>
               </Table.Body>
+              <Table.Footer fullWidth>
+                <Table.Row>
+                  <Table.HeaderCell />
+                  <Table.HeaderCell colSpan="4">
+                    <UpdateCompany
+                      id={employer.id}
+                      companyValue={employer}
+                      mert={"mert"}
+                    ></UpdateCompany>
+                  </Table.HeaderCell>
+                </Table.Row>
+              </Table.Footer>
             </Table>
           </Grid.Column>
+
           <Grid.Column width={10}>
             <Table celled color="black">
               <Table.Header>

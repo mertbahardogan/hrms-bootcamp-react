@@ -25,7 +25,7 @@ export default function JobSeekerLinks({ seekerId }) {
                   id={value.id}
                   linkValue={value}
                 ></UpdateJobSeekerLink>
-                <Button>
+                <Button type="button" formAction="www.google.com">
                   <Icon
                     name={value.linkType.id === 2 ? "linkedin" : "twitter"}
                   ></Icon>

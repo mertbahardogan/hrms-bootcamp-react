@@ -17,10 +17,13 @@ import CompanyDetail from "../pages/employer/CompanyDetail";
 import Resume from "../pages/job_seeker/Resume";
 import JobAdvertisementDetailPosition from "../pages/jobs/JobAdvertisementDetailPosition";
 import ResumeDetail from "../pages/job_seeker/ResumeDetail";
+import { ToastContainer } from "react-toastify";
 
 export default function Dashboard() {
   return (
     <div>
+      <ToastContainer position="bottom-right"></ToastContainer>
+
       <Grid>
         <GridRow>
           <GridColumn width={4}>

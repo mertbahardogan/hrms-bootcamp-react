@@ -1,17 +1,34 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { Header, Icon, Button, Card } from "semantic-ui-react";
+import { toast } from "react-toastify";
+import { Header, Icon, Button, Card, Pagination } from "semantic-ui-react";
 import JobAdvertisementService from "../../services/jobAdvertisementService";
+import { addToFav } from "../../store/actions/favouriteActions";
 
 export default function JobAdvertisement() {
+  let jobAdvertisementService = new JobAdvertisementService();
   const [jobAdvertisements, setJobAdvertisements] = useState([]);
+  const [activePage, setActivePage] = useState(1);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    let jobAdvertisementService = new JobAdvertisementService();
     jobAdvertisementService
-      .getAdvertsByIsActiveAndIsApproved()
+      .getAdvertsIsActiveAndApprovedByPage(activePage, 5)
       .then((result) => setJobAdvertisements(result.data.data));
   }, []);
+
+  const handlePaginationChanging = (e, { activePage }) => {
+    setActivePage(activePage);
+    jobAdvertisementService
+      .getAdvertsIsActiveAndApprovedByPage(activePage, 5)
+      .then((result) => setJobAdvertisements(result.data.data));
+  };
+
+  const handleAddToFav = (advertisement) => {
+    dispatch(addToFav(advertisement));
+    toast.success(`${advertisement.jobPosition.name} favorilere eklendi!`);
+  };
 
   return (
     <div>
@@ -31,7 +48,11 @@ export default function JobAdvertisement() {
             </Card.Description>
           </Card.Content>
 
-          <Card.Content textAlign="right">
+          <Card.Content textAlign="center">
+            <Button onClick={() => handleAddToFav(advert)} color="red">
+              <Icon name="like" />
+              Fav
+            </Button>
             <Button
               as={Link}
               to={`/job-advertisement/${advert.id}`}
@@ -42,6 +63,11 @@ export default function JobAdvertisement() {
           </Card.Content>
         </Card>
       ))}
+      <Pagination
+        defaultActivePage={1}
+        totalPages={2}
+        onPageChange={handlePaginationChanging}
+      />
     </div>
   );
 }
